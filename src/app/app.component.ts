@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 
 //https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web
 
@@ -9,6 +9,7 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, ChangeDetector
 })
 export class AppComponent implements OnInit {
   @ViewChild("bteIcon", {static:false}) bteIcon : ElementRef;
+   private navigator : any;
    private connected : boolean = false;
    private deviceName : string;
 
@@ -28,14 +29,14 @@ export class AppComponent implements OnInit {
    readonly SCOREBOARD_CHAR_RED_1 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
    readonly SCOREBOARD_CHAR_BLUE_1 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
 
-  constructor(private ref: ChangeDetectorRef){
-    console.log(ref);
+  constructor(){
   }
 
   ngOnInit(){}
   //Bluetooth logic
   connectBte(){
-      navigator.bluetooth.requestDevice({
+      this.navigator = navigator;
+      this.navigator.bluetooth.requestDevice({
 
           filters :[{
             //TODO: Search for multiple names.
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit {
       .then(device => {
         console.log("Connecting to " + device.name);
         this.onConnect(device.name);
-        device.addEventListener('gattserverdisconnected',this.onDisconnected);
+        device.addEventListener('gattserverdisconnected',(event) => this.onDisconnected(event));
         return device.gatt.connect();
       })
       .then(server => {
@@ -103,8 +104,6 @@ export class AppComponent implements OnInit {
     console.log('Device ' + device.name + ' is disconnected.');
 
     this.connected = false;
-    console.log(this.ref);
-    this.ref.detectChanges();
 
     this.bteIcon.nativeElement.classList.add('bte-disconnected');
     this.bteIcon.nativeElement.classList.remove('bte-connected');
