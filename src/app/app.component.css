@@ -47,6 +47,11 @@
 
 }
 
+.scale-spinner {
+  height:3vh;
+  width:3vw;
+}
+
 .score-text{
   font-size:10vh;
   font-size:10vw;

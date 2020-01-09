@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
-
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit , ChangeDetectorRef} from '@angular/core';
+declare var $ : any;
 //https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web
 
 @Component({
@@ -10,8 +10,13 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angula
 export class AppComponent implements OnInit {
   @ViewChild("bteIcon", {static:false}) bteIcon : ElementRef;
    private navigator : any;
+   private device : any;
+   private connecting : boolean = false; //Controls spinner;
    private connected : boolean = false;
    private deviceName : string;
+
+   private readonly defaultBteModalText ="Not connected to any devices."
+   private bteModalText : string = this.defaultBteModalText;
 
    private redScoreChar;
    private blueScoreChar;
@@ -24,12 +29,13 @@ export class AppComponent implements OnInit {
    private redScore : number = 0;
    private blueScore : number = 0;
 
-   readonly SCOREBOARD_NAME_1 : string = "Green Scoreboard";
-   readonly SCOREBOARD_SERVICE_UUID_1 : string = "a7fe1050-e168-11e9-81b4-2a2ae2dbcce4";
-   readonly SCOREBOARD_CHAR_RED_1 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
-   readonly SCOREBOARD_CHAR_BLUE_1 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
+   private readonly SCOREBOARD_NAME_1 : string = "Green Scoreboard";
+   private readonly SCOREBOARD_SERVICE_UUID_1 : string = "a7fe1050-e168-11e9-81b4-2a2ae2dbcce4";
+   private readonly SCOREBOARD_CHAR_RED_1 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
+   private readonly SCOREBOARD_CHAR_BLUE_1 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
 
-  constructor(){
+  constructor(private ref : ChangeDetectorRef){
+
   }
 
   ngOnInit(){}
@@ -46,6 +52,7 @@ export class AppComponent implements OnInit {
       })
       .then(device => {
         console.log("Connecting to " + device.name);
+        this.device = device;
         this.onConnect(device.name);
         device.addEventListener('gattserverdisconnected',(event) => this.onDisconnected(event));
         return device.gatt.connect();
@@ -87,16 +94,29 @@ export class AppComponent implements OnInit {
       }
   }
 
+  openModal(){
+    $('#bteOptionModal').modal('toggle');
+  }
+
   onConnect(deviceName){
-
     this.deviceName=deviceName;
+    this.connecting = true;
+  }
 
+  onDisconnect(){
+    this.device.gatt.disconnect();
   }
 
   onServiceConnect(){
     this.connected=true;
+    this.connecting = false;
+
+    this.ref.detectChanges();
+
     this.bteIcon.nativeElement.classList.remove('bte-disconnected');
     this.bteIcon.nativeElement.classList.add('bte-connected');
+
+    this.bteModalText = "Connected to " + this.deviceName +".";
   }
 
   onDisconnected(event) {
@@ -104,9 +124,12 @@ export class AppComponent implements OnInit {
     console.log('Device ' + device.name + ' is disconnected.');
 
     this.connected = false;
+    this.ref.detectChanges();
 
     this.bteIcon.nativeElement.classList.add('bte-disconnected');
     this.bteIcon.nativeElement.classList.remove('bte-connected');
+
+    this.bteModalText = this.defaultBteModalText;
   }
 
   getServicesCharacteristic(characteristics){
