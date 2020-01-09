@@ -39,8 +39,8 @@
 }
 
 .scale-icon-in-header {
-  font-size:3vh;
-  font-size:3vw;
+  font-size:5vh;
+  font-size:5vw;
 }
 
 .scale-icon-80 {
@@ -55,8 +55,8 @@
 }
 
 .score-text{
-  font-size:10vh;
-  font-size:10vw;
+  font-size:20vh;
+  font-size:20vw;
 }
 
 .blueScorePanel {

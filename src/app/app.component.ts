@@ -218,7 +218,9 @@ export class AppComponent implements OnInit {
      this.blueScoreText = "00";
 
      this.writeToRedChar(this.redScore);
-     this.writeToBlueChar(this.blueScore);
+     setTimeout(()=>{
+       this.writeToBlueChar(this.blueScore);
+     }, 250);
   }
  }
 }
