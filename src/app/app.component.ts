@@ -34,6 +34,13 @@ export class AppComponent implements OnInit {
    private readonly SCOREBOARD_CHAR_RED_1 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
    private readonly SCOREBOARD_CHAR_BLUE_1 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
 
+   private readonly SCOREBOARD_NAME_2 : string = "Orange Scoreboard";
+   private readonly SCOREBOARD_SERVICE_UUID_2 : string = "19614830-3320-11ea-978f-2e728ce88125";
+   private readonly SCOREBOARD_CHAR_RED_2 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
+   private readonly SCOREBOARD_CHAR_BLUE_2 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
+
+
+
   constructor(private ref : ChangeDetectorRef){
 
   }
@@ -47,8 +54,13 @@ export class AppComponent implements OnInit {
           filters :[{
             //TODO: Search for multiple names.
             name: this.SCOREBOARD_NAME_1
-          }],
-          optionalServices: [this.SCOREBOARD_SERVICE_UUID_1]
+
+          },{
+            //TODO: Search for multiple names.
+            name: this.SCOREBOARD_NAME_2
+          }
+        ],
+          optionalServices: [this.SCOREBOARD_SERVICE_UUID_1, this.SCOREBOARD_SERVICE_UUID_2]
       })
       .then(device => {
         console.log("Connecting to " + device.name);
@@ -60,16 +72,23 @@ export class AppComponent implements OnInit {
       .then(server => {
         if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_1)==0){
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_1);
+        }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_2)==0){
+          return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_2);
         }else{
           return null;
         }
       })
       .then(service =>{
+
+
         this.redScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_RED_1);
         this.blueScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_BLUE_1);
         this.onServiceConnect();
       })
-      .catch(error => { console.log(error); });
+      .catch(error => {
+        console.log(error);
+        this.connecting = false;
+      });
   }
 
   writeToBlueChar(score : number){
