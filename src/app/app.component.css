@@ -10,6 +10,8 @@
 
 }
 
+
+
 .footer {
   height:10%;
   min-height: 10%;
@@ -32,8 +34,8 @@
 }
 
 .scaleButton {
-    font-size:10vh;
-    font-size:10vw;
+    font-size:20vh;
+    font-size:20vw;
 }
 
 .scale-icon-in-header {
@@ -55,7 +57,6 @@
 .score-text{
   font-size:10vh;
   font-size:10vw;
-
 }
 
 .blueScorePanel {
