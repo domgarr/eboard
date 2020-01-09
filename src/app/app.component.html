@@ -5,8 +5,8 @@
       <div class="col-8">
         <h1 class="display-2 text-white ml-3 mt-3"> eBoard </h1>
       </div>
-      <div class="col-1 m-1 d-flex align-self-center" > <button id="swappedButton" type="button" class="btn btn-info" (click)="swap($event)"><i class="material-icons scale-icon-in-header">sync_alt</i></button></div>
-      <div class="col-1 m-1 d-flex align-self-center" > <button id="resetButton" type="button" class="btn btn-warning" (click)="resetScore($event)"><i class="material-icons scale-icon-in-header">refresh</i></button></div>
+      <div class="col-1 m-1 d-flex align-self-center" > <button id="swappedButton" type="button" class="btn btn-info" (click)="swap()"><i class="material-icons scale-icon-in-header">sync_alt</i></button></div>
+      <div class="col-1 m-1 d-flex align-self-center" > <button id="resetButton" type="button" class="btn btn-warning" (click)="resetScore()"><i class="material-icons scale-icon-in-header">refresh</i></button></div>
       <div class="col-1 m-1 d-flex align-self-center" >
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bteOptionModal" (click)="openModal()">
           <i *ngIf="!connecting" #bteIcon class="material-icons scale-icon-in-header bte-disconnected">bluetooth</i>
@@ -54,32 +54,32 @@
               <div class="card-body vertical-align">
                 <div *ngIf="swapped; else defaultButton" class ="row">
                   <div class="col-6 mb-3 d-flex justify-content-center align-self-center">
-                    <button id="redScoreIncButton" type="button" class="btn btn-danger" (click)="redScoreInc($event)"><i class="material-icons scale-icon-80">arrow_upward</i></button>
+                    <button id="redScoreIncButton" type="button" class="btn btn-danger" (click)="redScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
                   </div>
                   <div class="col-6 mb-3 d-flex justify-content-center align-self-center">
-                    <button id="blueScoreIncButton" type="button" class="btn btn-primary" (click)="blueScoreInc($event)"><i class="material-icons scale-icon-80">arrow_upward</i></button>
+                    <button id="blueScoreIncButton" type="button" class="btn btn-primary" (click)="blueScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
                   </div>
                   <div class="col-6 mt-3 d-flex justify-content-center align-self-center">
-                    <button id="redScoreDecButton" type="button" class="btn btn-danger" (click)="redScoreDec($event)"><i class="material-icons scale-icon-80">arrow_downward</i></button>
+                    <button id="redScoreDecButton" type="button" class="btn btn-danger" (click)="redScoreDec()"><i class="material-icons scale-icon-80">arrow_downward</i></button>
                   </div>
                   <div class="col-6 mt-3 d-flex justify-content-center align-self-center">
-                    <button id="blueScoreDecButton" type="button" class="btn btn-primary" (click)="blueScoreDec($event)"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
+                    <button id="blueScoreDecButton" type="button" class="btn btn-primary" (click)="blueScoreDec()"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
                   </div>
                  </div>
 
               <ng-template #defaultButton>
               <div class="row">
                 <div class="col-6 mb-3 d-flex justify-content-center align-self-center">
-                  <button id="blueScoreIncButton" type="button" class="btn btn-primary" (click)="blueScoreInc($event)"><i class="material-icons scale-icon-80">arrow_upward</i></button>
+                  <button id="blueScoreIncButton" type="button" class="btn btn-primary" (click)="blueScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
                 </div>
                 <div class="col-6 mb-3 d-flex justify-content-center align-self-center">
-                  <button id="redScoreIncButton" type="button" class="btn btn-danger" (click)="redScoreInc($event)"><i class="material-icons scale-icon-80">arrow_upward</i></button>
+                  <button id="redScoreIncButton" type="button" class="btn btn-danger" (click)="redScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
                 </div>
                 <div class="col-6 mt-3 d-flex justify-content-center align-self-center">
-                  <button id="blueScoreDecButton" type="button" class="btn btn-primary" (click)="blueScoreDec($event)"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
+                  <button id="blueScoreDecButton" type="button" class="btn btn-primary" (click)="blueScoreDec()"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
                 </div>
                 <div class="col-6 mt-3 d-flex justify-content-center align-self-center">
-                  <button id="redScoreDecButton" type="button" class="btn btn-danger" (click)="redScoreDec($event)"><i class="material-icons scale-icon-80">arrow_downward</i></button>
+                  <button id="redScoreDecButton" type="button" class="btn btn-danger" (click)="redScoreDec()"><i class="material-icons scale-icon-80">arrow_downward</i></button>
                 </div>
               </div>
               </ng-template>

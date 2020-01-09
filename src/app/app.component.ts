@@ -11,20 +11,20 @@ export class AppComponent implements OnInit {
   @ViewChild("bteIcon", {static:false}) bteIcon : ElementRef;
    private navigator : any;
    private device : any;
-   private connecting : boolean = false; //Controls spinner;
+   connecting : boolean = false; //Controls spinner;
    private connected : boolean = false;
    private deviceName : string;
 
    private readonly defaultBteModalText ="Not connected to any devices."
-   private bteModalText : string = this.defaultBteModalText;
+   bteModalText : string = this.defaultBteModalText;
 
    private redScoreChar;
    private blueScoreChar;
 
-   private swapped : boolean = false;
+   swapped : boolean = false;
 
-   private redScoreText : string = "00";
-   private blueScoreText : string = "00";
+   redScoreText : string = "00";
+   blueScoreText : string = "00";
 
    private redScore : number = 0;
    private blueScore : number = 0;
@@ -54,7 +54,6 @@ export class AppComponent implements OnInit {
           filters :[{
             //TODO: Search for multiple names.
             name: this.SCOREBOARD_NAME_1
-
           },{
             //TODO: Search for multiple names.
             name: this.SCOREBOARD_NAME_2
