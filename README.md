@@ -1,32 +1,19 @@
-<<<<<<< HEAD
-# EBoard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-=======
 # eBoardWebApp
 A WebApp that connects to BTE to control Electronic Scoreboards.
->>>>>>> 5646eae33ec77c928b65b4096d8c13417b15b483
+
+eBoard uses Bluetooth API developed by Google.
+https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web
+
+The app is testing in Chrome, only supports Chrome and is built with mobile in mind. With that in mind, the desktop version of this webapp looks horrible.
+
+## Purpose
+In a previous project I built an Electronic Scoreboard which was controlled a Smartwatch. I later added push buttons to control the Scoreboard. The reason for needing a scoreboard controlled by a watch - so that I could play and keep score - slowly disappeared as more and more people joined the volleyball league I would play at. I later would build an android app to control the scoreboard. The problem with that app was that Iphone users couldn't control the scoreboard. Finally, I decided to make a webapp in Angular, which is overkill ofcourse, but I wanted to improve my skills in this technology. Now there is a webapp that anyone can visit. All that is needed is google chrome.
+
+## TODO:
+- I would like the app to fill the whole page and not scroll.
+- Fix BLE loading icon while connecting. It needs the size reduced.
+
+
+
+
