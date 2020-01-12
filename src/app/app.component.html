@@ -1,16 +1,16 @@
 
 
-<div class="container main-wrapper">
+<div class="container container-wrapper">
     <div class ="row header">
       <div class="col-6 d-flex align-self-center">
-        <h1 class="display-4 text-white ml-2"> eBoard </h1>
+        <h1 class="display-5 text-white ml-2"> eBoard </h1>
       </div>
       <div class="col-1 m-2 d-flex align-self-center" > <button id="swappedButton" type="button" class="btn btn-info" (click)="swap()"><i class="material-icons scale-icon-in-header">sync_alt</i></button></div>
       <div class="col-1 m-2 d-flex align-self-center" > <button id="resetButton" type="button" class="btn btn-warning" (click)="resetScore()"><i class="material-icons scale-icon-in-header">refresh</i></button></div>
       <div class="col-1 m-2 d-flex align-self-center" >
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bteOptionModal" (click)="openModal()">
           <i *ngIf="!connecting" #bteIcon class="material-icons scale-icon-in-header bte-disconnected">bluetooth</i>
-          <div *ngIf="connecting" class="spinner-border text-warning scale-spinner" role="status">
+          <div *ngIf="connecting" class="spinner-grow text-warning scale-spinner" role="status">
             <span class="sr-only ">Loading...</span>
           </div>
         </button>
@@ -115,5 +115,4 @@
             </div>
           </div>
         </div>
-
     </div>

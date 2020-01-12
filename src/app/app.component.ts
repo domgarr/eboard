@@ -122,7 +122,9 @@ export class AppComponent implements OnInit {
   }
 
   onDisconnect(){
-    this.device.gatt.disconnect();
+    if(this.device != null){
+      this.device.gatt.disconnect();
+    }
   }
 
   onServiceConnect(){
