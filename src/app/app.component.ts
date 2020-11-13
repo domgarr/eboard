@@ -29,17 +29,19 @@ export class AppComponent implements OnInit {
    private redScore : number = 0;
    private blueScore : number = 0;
 
+   //The Scoreboards can share the same characteris identifers.
+   private readonly SCOREBOARD_CHAR_RED : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
+   private readonly SCOREBOARD_CHAR_BLUE : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
+
+   //Aslong as the service identifer are unique. You can connect to multiple scoreboards in one room.
    private readonly SCOREBOARD_NAME_1 : string = "Green Scoreboard";
    private readonly SCOREBOARD_SERVICE_UUID_1 : string = "a7fe1050-e168-11e9-81b4-2a2ae2dbcce4";
-   private readonly SCOREBOARD_CHAR_RED_1 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
-   private readonly SCOREBOARD_CHAR_BLUE_1 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
-
+   
    private readonly SCOREBOARD_NAME_2 : string = "Orange Scoreboard";
    private readonly SCOREBOARD_SERVICE_UUID_2 : string = "19614830-3320-11ea-978f-2e728ce88125";
-   private readonly SCOREBOARD_CHAR_RED_2 : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
-   private readonly SCOREBOARD_CHAR_BLUE_2 : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
-
-
+ 
+   private readonly SCOREBOARD_NAME_3 : string = "Brando's Scoreboard";
+   private readonly SCOREBOARD_SERVICE_UUID_3 : string = "df7ba31c-2537-11eb-adc1-0242ac120002";
 
   constructor(private ref : ChangeDetectorRef){
 
@@ -54,12 +56,15 @@ export class AppComponent implements OnInit {
           filters :[{
             //TODO: Search for multiple names.
             name: this.SCOREBOARD_NAME_1
-          },{
-            //TODO: Search for multiple names.
+          },
+          {
             name: this.SCOREBOARD_NAME_2
+          },
+          {
+            name: this.SCOREBOARD_NAME_3
           }
         ],
-          optionalServices: [this.SCOREBOARD_SERVICE_UUID_1, this.SCOREBOARD_SERVICE_UUID_2]
+          optionalServices: [this.SCOREBOARD_SERVICE_UUID_1, this.SCOREBOARD_SERVICE_UUID_2, this.SCOREBOARD_SERVICE_UUID_3]
       })
       .then(device => {
         console.log("Connecting to " + device.name);
@@ -69,19 +74,20 @@ export class AppComponent implements OnInit {
         return device.gatt.connect();
       })
       .then(server => {
+        console.log(this.deviceName);
         if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_1)==0){
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_1);
         }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_2)==0){
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_2);
+        }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_3)==0){
+          return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_3);
         }else{
           return null;
         }
       })
       .then(service =>{
-
-
-        this.redScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_RED_1);
-        this.blueScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_BLUE_1);
+        this.redScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_RED);
+        this.blueScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_BLUE);
         this.onServiceConnect();
       })
       .catch(error => {
