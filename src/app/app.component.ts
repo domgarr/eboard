@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
         return device.gatt.connect();
       })
       .then(server => {
-        console.log(this.deviceName);
+        
         if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_1)==0){
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_1);
         }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_2)==0){
