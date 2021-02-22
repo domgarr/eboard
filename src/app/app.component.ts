@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit , ChangeDetectorRef} from '@angular/core';
-declare var $ : any;
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+declare var $: any;
 //https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web
 
 @Component({
@@ -8,84 +8,84 @@ declare var $ : any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  @ViewChild("bteIcon", {static:false}) bteIcon : ElementRef;
-   private navigator : any;
-   private device : any;
-   connecting : boolean = false; //Controls spinner;
-   private connected : boolean = false;
-   private deviceName : string;
+  @ViewChild("bteIcon", { static: false }) bteIcon: ElementRef;
+  private navigator: any;
+  private device: any;
+  connecting: boolean = false; //Controls spinner;
+  private connected: boolean = false;
+  private deviceName: string;
 
-   private readonly defaultBteModalText ="Not connected to any devices."
-   bteModalText : string = this.defaultBteModalText;
+  private readonly defaultBteModalText = "Not connected to any devices."
+  bteModalText: string = this.defaultBteModalText;
 
-   private redScoreChar;
-   private blueScoreChar;
+  private redScoreChar;
+  private blueScoreChar;
 
-   swapped : boolean = false;
+  swapped: boolean = false;
 
-   redScoreText : string = "00";
-   blueScoreText : string = "00";
+  redScoreText: string = "00";
+  blueScoreText: string = "00";
 
-   private redScore : number = 0;
-   private blueScore : number = 0;
+  private redScore: number = 0;
+  private blueScore: number = 0;
 
-   //The Scoreboards can share the same characteris identifers.
-   private readonly SCOREBOARD_CHAR_RED : string = "0000aaaa-0000-1000-8000-00805f9b34fb";
-   private readonly SCOREBOARD_CHAR_BLUE : string = "0000bbbb-0000-1000-8000-00805f9b34fb";
+  //The Scoreboards can share the same characteris identifers.
+  private readonly SCOREBOARD_CHAR_RED: string = "0000aaaa-0000-1000-8000-00805f9b34fb";
+  private readonly SCOREBOARD_CHAR_BLUE: string = "0000bbbb-0000-1000-8000-00805f9b34fb";
 
-   //Aslong as the service identifer are unique. You can connect to multiple scoreboards in one room.
-   private readonly SCOREBOARD_NAME_1 : string = "Green Scoreboard";
-   private readonly SCOREBOARD_SERVICE_UUID_1 : string = "a7fe1050-e168-11e9-81b4-2a2ae2dbcce4";
-   
-   private readonly SCOREBOARD_NAME_2 : string = "Orange Scoreboard";
-   private readonly SCOREBOARD_SERVICE_UUID_2 : string = "19614830-3320-11ea-978f-2e728ce88125";
- 
-   private readonly SCOREBOARD_NAME_3 : string = "Brando's Scoreboard";
-   private readonly SCOREBOARD_SERVICE_UUID_3 : string = "df7ba31c-2537-11eb-adc1-0242ac120002";
+  //Aslong as the service identifer are unique. You can connect to multiple scoreboards in one room.
+  private readonly SCOREBOARD_NAME_1: string = "Green Scoreboard";
+  private readonly SCOREBOARD_SERVICE_UUID_1: string = "a7fe1050-e168-11e9-81b4-2a2ae2dbcce4";
 
-  constructor(private ref : ChangeDetectorRef){
+  private readonly SCOREBOARD_NAME_2: string = "Orange Scoreboard";
+  private readonly SCOREBOARD_SERVICE_UUID_2: string = "19614830-3320-11ea-978f-2e728ce88125";
+
+  private readonly SCOREBOARD_NAME_3: string = "Brando's Scoreboard";
+  private readonly SCOREBOARD_SERVICE_UUID_3: string = "df7ba31c-2537-11eb-adc1-0242ac120002";
+
+  constructor(private ref: ChangeDetectorRef) {
 
   }
 
-  ngOnInit(){}
+  ngOnInit() { }
   //Bluetooth logic
-  connectBte(){
-      this.navigator = navigator;
-      this.navigator.bluetooth.requestDevice({
+  connectBte() {
+    this.navigator = navigator;
+    this.navigator.bluetooth.requestDevice({
 
-          filters :[{
-            //TODO: Search for multiple names.
-            name: this.SCOREBOARD_NAME_1
-          },
-          {
-            name: this.SCOREBOARD_NAME_2
-          },
-          {
-            name: this.SCOREBOARD_NAME_3
-          }
-        ],
-          optionalServices: [this.SCOREBOARD_SERVICE_UUID_1, this.SCOREBOARD_SERVICE_UUID_2, this.SCOREBOARD_SERVICE_UUID_3]
-      })
+      filters: [{
+        //TODO: Search for multiple names.
+        name: this.SCOREBOARD_NAME_1
+      },
+      {
+        name: this.SCOREBOARD_NAME_2
+      },
+      {
+        name: this.SCOREBOARD_NAME_3
+      }
+      ],
+      optionalServices: [this.SCOREBOARD_SERVICE_UUID_1, this.SCOREBOARD_SERVICE_UUID_2, this.SCOREBOARD_SERVICE_UUID_3]
+    })
       .then(device => {
         console.log("Connecting to " + device.name);
         this.device = device;
         this.onConnect(device.name);
-        device.addEventListener('gattserverdisconnected',(event) => this.onDisconnected(event));
+        device.addEventListener('gattserverdisconnected', (event) => this.onDisconnected(event));
         return device.gatt.connect();
       })
       .then(server => {
-        
-        if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_1)==0){
+
+        if (this.deviceName.localeCompare(this.SCOREBOARD_NAME_1) == 0) {
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_1);
-        }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_2)==0){
+        } else if (this.deviceName.localeCompare(this.SCOREBOARD_NAME_2) == 0) {
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_2);
-        }else if(this.deviceName.localeCompare(this.SCOREBOARD_NAME_3)==0){
+        } else if (this.deviceName.localeCompare(this.SCOREBOARD_NAME_3) == 0) {
           return server.getPrimaryService(this.SCOREBOARD_SERVICE_UUID_3);
-        }else{
+        } else {
           return null;
         }
       })
-      .then(service =>{
+      .then(service => {
         this.redScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_RED);
         this.blueScoreChar = service.getCharacteristic(this.SCOREBOARD_CHAR_BLUE);
         this.onServiceConnect();
@@ -96,45 +96,45 @@ export class AppComponent implements OnInit {
       });
   }
 
-  writeToBlueChar(score : number){
-    if(this.blueScoreChar!= null && this.connected ){
-      this.blueScoreChar.then(char =>{
+  writeToBlueChar(score: number) {
+    if (this.blueScoreChar != null && this.connected) {
+      this.blueScoreChar.then(char => {
         let value = Uint8Array.of(score);
         char.writeValue(value);
-      }).catch(error =>{
+      }).catch(error => {
         console.log("Not connected to Service yet.")
       });
     }
   }
 
-    writeToRedChar(score : number){
-      if(this.redScoreChar!= null && this.connected){
-        this.redScoreChar.then(char =>{
-          let value = Uint8Array.of(score);
-          char.writeValue(value);
-        }).catch(error =>{
-          console.log("Not connected to Service yet.")
-        });
-      }
+  writeToRedChar(score: number) {
+    if (this.redScoreChar != null && this.connected) {
+      this.redScoreChar.then(char => {
+        let value = Uint8Array.of(score);
+        char.writeValue(value);
+      }).catch(error => {
+        console.log("Not connected to Service yet.")
+      });
+    }
   }
 
-  openModal(){
+  openModal() {
     $('#bteOptionModal').modal('toggle');
   }
 
-  onConnect(deviceName){
-    this.deviceName=deviceName;
+  onConnect(deviceName) {
+    this.deviceName = deviceName;
     this.connecting = true;
   }
 
-  onDisconnect(){
-    if(this.device != null){
+  onDisconnect() {
+    if (this.device != null) {
       this.device.gatt.disconnect();
     }
   }
 
-  onServiceConnect(){
-    this.connected=true;
+  onServiceConnect() {
+    this.connected = true;
     this.connecting = false;
 
     this.ref.detectChanges();
@@ -142,7 +142,7 @@ export class AppComponent implements OnInit {
     this.bteIcon.nativeElement.classList.remove('bte-disconnected');
     this.bteIcon.nativeElement.classList.add('bte-connected');
 
-    this.bteModalText = "Connected to " + this.deviceName +".";
+    this.bteModalText = "Connected to " + this.deviceName + ".";
   }
 
   onDisconnected(event) {
@@ -158,77 +158,77 @@ export class AppComponent implements OnInit {
     this.bteModalText = this.defaultBteModalText;
   }
 
-  getServicesCharacteristic(characteristics){
-    characteristics.forEach(characteristic =>{
+  getServicesCharacteristic(characteristics) {
+    characteristics.forEach(characteristic => {
       console.log(characteristic);
     });
   }
 
- //App logic
-  incrementScore(value : number) : number{
-   return value + 1;
- }
-
- decrementScore(value : number) : number{
-   if(value <= 0){
-     return 0;
-   }
-   return value - 1;
- }
-
- /* If the score is less than 10 prepend a "0" for design purposes"
- takes a number and returns a string. */
- prependZeroAndConvertToString(score : number) : string {
-   if(score <= 9){
-     return "0" + score;
-   }
-   return score + "";
- }
-
- blueScoreInc(){
-   this.blueScore = this.incrementScore(this.blueScore);
-   this.blueScoreText = this.prependZeroAndConvertToString(this.blueScore);
-
-   this.writeToBlueChar(this.blueScore);
- }
-
- redScoreInc(){
-   this.redScore = this.incrementScore(this.redScore);
-   this.redScoreText = this.prependZeroAndConvertToString(this.redScore);
-
-   this.writeToRedChar(this.redScore);
- }
-
- blueScoreDec(){
-   this.blueScore = this.decrementScore(this.blueScore);
-   this.blueScoreText = this.prependZeroAndConvertToString(this.blueScore);
-
-   this.writeToBlueChar(this.blueScore);
-
- }
-
- redScoreDec(){
-   this.redScore = this.decrementScore(this.redScore);
-   this.redScoreText = this.prependZeroAndConvertToString(this.redScore);
-
-   this.writeToRedChar(this.redScore);
- }
-
- swap(){
-   this.swapped = !this.swapped;
- }
-
- resetScore(){
-   if(confirm("Are you sure you want to reset the scores?")){
-     this.redScore = 0;
-     this.blueScore = 0;
-     this.redScoreText = "00";
-     this.blueScoreText = "00";
-
-     this.writeToRedChar(this.redScore);
-     setTimeout(()=>{
-       this.writeToBlueChar(this.blueScore);
-     }, 250);
+  //App logic
+  incrementScore(value: number): number {
+    return value + 1;
   }
- }
+
+  decrementScore(value: number): number {
+    if (value <= 0) {
+      return 0;
+    }
+    return value - 1;
+  }
+
+  /* If the score is less than 10 prepend a "0" for design purposes"
+  takes a number and returns a string. */
+  prependZeroAndConvertToString(score: number): string {
+    if (score <= 9) {
+      return "0" + score;
+    }
+    return score + "";
+  }
+
+  blueScoreInc() {
+    this.blueScore = this.incrementScore(this.blueScore);
+    this.blueScoreText = this.prependZeroAndConvertToString(this.blueScore);
+
+    this.writeToBlueChar(this.blueScore);
+  }
+
+  redScoreInc() {
+    this.redScore = this.incrementScore(this.redScore);
+    this.redScoreText = this.prependZeroAndConvertToString(this.redScore);
+
+    this.writeToRedChar(this.redScore);
+  }
+
+  blueScoreDec() {
+    this.blueScore = this.decrementScore(this.blueScore);
+    this.blueScoreText = this.prependZeroAndConvertToString(this.blueScore);
+
+    this.writeToBlueChar(this.blueScore);
+
+  }
+
+  redScoreDec() {
+    this.redScore = this.decrementScore(this.redScore);
+    this.redScoreText = this.prependZeroAndConvertToString(this.redScore);
+
+    this.writeToRedChar(this.redScore);
+  }
+
+  swap() {
+    this.swapped = !this.swapped;
+  }
+
+  resetScore() {
+    if (confirm("Are you sure you want to reset the scores?")) {
+      this.redScore = 0;
+      this.blueScore = 0;
+      this.redScoreText = "00";
+      this.blueScoreText = "00";
+
+      this.writeToRedChar(this.redScore);
+      setTimeout(() => {
+        this.writeToBlueChar(this.blueScore);
+      }, 250);
+    }
+  }
 }

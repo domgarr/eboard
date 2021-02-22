@@ -1,127 +1,137 @@
-
-
 <div class="container container-wrapper">
-    <div class ="row header">
-      <div class="col-6 d-flex align-self-center">
-        <h1 class="display-3 text-white ml-2"> eScoreBoard </h1>
+  <div class="row header">
+    <div class="col-6 d-flex align-self-center">
+      <h1 class="display-3 text-white ml-2"> eScoreBoard </h1>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <div class="m-2 d-flex align-self-center"> <button id="swappedButton" type="button" class="btn btn-info"
+          (click)="swap()"><i class="material-icons header-icon">sync_alt</i></button></div>
+      <div class="m-2 d-flex align-self-center"> <button id="resetButton" type="button" class="btn btn-warning"
+          (click)="resetScore()"><i class="material-icons header-icon">refresh</i></button></div>
+      <div class="m-2 d-flex align-self-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bteOptionModal"
+          (click)="openModal()">
+          <i *ngIf="!connecting" #bteIcon class="material-icons header-icon bte-disconnected">bluetooth</i>
+          <div *ngIf="connecting" class="spinner-grow text-warning scale-spinner" role="status">
+            <span class="sr-only ">Loading...</span>
+          </div>
+        </button>
       </div>
-      <div class="col-6 d-flex justify-content-end">
-        <div class="m-2 d-flex align-self-center" > <button id="swappedButton" type="button" class="btn btn-info" (click)="swap()"><i class="material-icons header-icon">sync_alt</i></button></div>
-        <div class="m-2 d-flex align-self-center" > <button id="resetButton" type="button" class="btn btn-warning" (click)="resetScore()"><i class="material-icons header-icon">refresh</i></button></div>
-        <div class="m-2 d-flex align-self-center" >
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bteOptionModal" (click)="openModal()">
-            <i *ngIf="!connecting" #bteIcon class="material-icons header-icon bte-disconnected">bluetooth</i>
-            <div *ngIf="connecting" class="spinner-grow text-warning scale-spinner" role="status">
-              <span class="sr-only ">Loading...</span>
-            </div>
-          </button>
+    </div>
+  </div>
+  <div *ngIf="swapped" class="row score-panel">
+    <div class="col-6  w-100 h-100 ">
+      <div class="text-white redScorePanel w-100 h-100">
+        <div class="d-flex justify-content-center w-100 h-100">
+          <p id="redScoreText" class="card-text score-text align-self-center">{{redScoreText}}</p>
         </div>
       </div>
     </div>
-      <div *ngIf="swapped" class="row score-panel" >
-         <div class = "col-6  w-100 h-100 ">
-           <div class="text-white redScorePanel w-100 h-100">
-                <div class="d-flex justify-content-center w-100 h-100">
-                  <p id="redScoreText" class="card-text score-text align-self-center">{{redScoreText}}</p>
-                </div>
-           </div>
-         </div>
-         <div class = "col-6 w-100 h-100">
-          <div class="text-white blueScorePanel w-100 h-100">
-              <div class="d-flex justify-content-center w-100 h-100">
-                <p id="blueScoreText" class="card-text score-text align-self-center">{{blueScoreText}}</p>
-              </div>
-          </div>
-         </div>
+    <div class="col-6 w-100 h-100">
+      <div class="text-white blueScorePanel w-100 h-100">
+        <div class="d-flex justify-content-center w-100 h-100">
+          <p id="blueScoreText" class="card-text score-text align-self-center">{{blueScoreText}}</p>
         </div>
+      </div>
+    </div>
+  </div>
 
-       <div *ngIf="!swapped" class="row score-panel">
-         <div class = "col-6 w-100 h-100">
-          <div class="text-white blueScorePanel w-100 h-100">
-              <div class="d-flex justify-content-center w-100 h-100">
-                <p id="blueScoreText" class="card-text score-text align-self-center">{{blueScoreText}}</p>
-              </div>
-          </div>
-         </div>
-         <div class = "col-6  w-100 h-100 ">
-           <div class="text-white redScorePanel w-100 h-100">
-                <div class="d-flex justify-content-center w-100 h-100">
-                  <p id="redScoreText" class="card-text score-text align-self-center">{{redScoreText}}</p>
-                </div>
-           </div>
-         </div>
-       </div>
+  <div *ngIf="!swapped" class="row score-panel">
+    <div class="col-6 w-100 h-100">
+      <div class="text-white blueScorePanel w-100 h-100">
+        <div class="d-flex justify-content-center w-100 h-100">
+          <p id="blueScoreText" class="card-text score-text align-self-center">{{blueScoreText}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6  w-100 h-100 ">
+      <div class="text-white redScorePanel w-100 h-100">
+        <div class="d-flex justify-content-center w-100 h-100">
+          <p id="redScoreText" class="card-text score-text align-self-center">{{redScoreText}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    
-            
-                
-                  <div *ngIf="swapped" class="row controls" >
-                    <div class="col-6  d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
-                      <button id="redScoreIncButton" type="button" class="btn btn-danger w-100" (click)="redScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
-                    </div>
-                    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
-                      <button id="blueScoreIncButton" type="button" class="btn btn-primary w-100" (click)="blueScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
-                    </div>
-                  </div>
-                
-                  <div *ngIf="swapped" class="row controls" >
-                    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
-                      <button id="redScoreDecButton" type="button" class="btn btn-danger w-100" (click)="redScoreDec()"><i class="material-icons scale-icon-80">arrow_downward</i></button>
-                    </div>
-                    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
-                      <button id="blueScoreDecButton" type="button" class="btn btn-primary w-100" (click)="blueScoreDec()"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
-                    </div>
-                  </div>
-                
-                              
 
-              
-              <div *ngIf="!swapped" class="row controls">
-                <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
-                  <button id="blueScoreIncButton" type="button" class="btn btn-primary w-100" (click)="blueScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
-                </div>
-                <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
-                  <button id="redScoreIncButton" type="button" class="btn btn-danger w-100" (click)="redScoreInc()"><i class="material-icons scale-icon-80">arrow_upward</i></button>
-                </div>
-              </div>
-              <div *ngIf="!swapped" class="row controls">
-                <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
-                  <button id="blueScoreDecButton" type="button" class="btn btn-primary w-100" (click)="blueScoreDec()"> <i class="material-icons scale-icon-80">arrow_downward</i></button>
-                </div>
-                <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
-                  <button id="redScoreDecButton" type="button" class="btn btn-danger w-100" (click)="redScoreDec()"><i class="material-icons scale-icon-80">arrow_downward</i></button>
-                </div>
-              </div>
-              
-            
-              <div class="row footer mb-1 ">
-                <div class=" w-100">
-                    <div class=" footer-bg-color w-100">
-                      <p class=" text-center text-white ">Domenico Garreffa January 2020</p>
-                    </div>
-                </div>
-              </div> 
+
+
+  <div *ngIf="swapped" class="row controls">
+    <div class="col-6  d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
+      <button id="redScoreIncButton" type="button" class="btn btn-danger w-100" (click)="redScoreInc()"><i
+          class="material-icons scale-icon-80">arrow_upward</i></button>
+    </div>
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
+      <button id="blueScoreIncButton" type="button" class="btn btn-primary w-100" (click)="blueScoreInc()"><i
+          class="material-icons scale-icon-80">arrow_upward</i></button>
+    </div>
+  </div>
+
+  <div *ngIf="swapped" class="row controls">
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
+      <button id="redScoreDecButton" type="button" class="btn btn-danger w-100" (click)="redScoreDec()"><i
+          class="material-icons scale-icon-80">arrow_downward</i></button>
+    </div>
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
+      <button id="blueScoreDecButton" type="button" class="btn btn-primary w-100" (click)="blueScoreDec()"> <i
+          class="material-icons scale-icon-80">arrow_downward</i></button>
+    </div>
+  </div>
+
+
+
+
+  <div *ngIf="!swapped" class="row controls">
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
+      <button id="blueScoreIncButton" type="button" class="btn btn-primary w-100" (click)="blueScoreInc()"><i
+          class="material-icons scale-icon-80">arrow_upward</i></button>
+    </div>
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-4 pb-2">
+      <button id="redScoreIncButton" type="button" class="btn btn-danger w-100" (click)="redScoreInc()"><i
+          class="material-icons scale-icon-80">arrow_upward</i></button>
+    </div>
+  </div>
+  <div *ngIf="!swapped" class="row controls">
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
+      <button id="blueScoreDecButton" type="button" class="btn btn-primary w-100" (click)="blueScoreDec()"> <i
+          class="material-icons scale-icon-80">arrow_downward</i></button>
+    </div>
+    <div class="col-6 d-flex justify-content-center align-self-center w-100 h-100 pt-2 pb-4">
+      <button id="redScoreDecButton" type="button" class="btn btn-danger w-100" (click)="redScoreDec()"><i
+          class="material-icons scale-icon-80">arrow_downward</i></button>
+    </div>
+  </div>
+
+
+  <div class="row footer mb-1 ">
+    <div class=" w-100">
+      <div class=" footer-bg-color w-100">
+        <p class=" text-center text-white ">Domenico Garreffa January 2020</p>
+      </div>
+    </div>
+  </div>
 </div>
-    
 
-    <!-- Modal -->
-    <div class="modal fade" id="bteOptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Bluetooth Options</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{bteModalText}}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="connectBte()" data-dismiss="modal">Connect</button>
-            <button type="button" class="btn btn-danger" (click)="onDisconnect()" data-dismiss="modal">Disconnect</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+
+<!-- Modal -->
+<div class="modal fade" id="bteOptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Bluetooth Options</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{bteModalText}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="connectBte()" data-dismiss="modal">Connect</button>
+        <button type="button" class="btn btn-danger" (click)="onDisconnect()" data-dismiss="modal">Disconnect</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>

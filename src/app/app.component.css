@@ -1,29 +1,26 @@
-.score-panel{
-    height: 30%;
-    min-height: 30%;
+.score-panel {
+  height: 30%;
+  min-height: 30%;
 }
 
 .header {
-    height:20%;
-    min-height: 20%;
-    background-color: #434343;
-
+  height: 20%;
+  min-height: 20%;
+  background-color: #434343;
 }
 
-
 .footer {
-  height:10%;
+  height: 10%;
   min-height: 10%;
-  
 }
 
 .footer-bg-color {
-    background-color: #434343
+  background-color: #434343
 }
 
-.controls{
-    height:20%;
-    min-height:20%;
+.controls {
+  height: 20%;
+  min-height: 20%;
 }
 
 .container-wrapper {
@@ -32,43 +29,36 @@
 }
 
 .scaleButton {
-    font-size:20vh;
-    font-size:20vw;
+  font-size: 20vh;
+  font-size: 20vw;
 }
 
-.header-icon {
-  
-}
+.header-icon {}
 
 .scale-icon-80 {
   font-size: 9vw;
   font-size: 9vh;
-
-
 }
 
 .scale-spinner {
   height: 4vh;
   width: 4vh;
-
 }
 
-.score-text{
-  
-}
+.score-text {}
 
 .blueScorePanel {
   background-color: #007bff;
 }
 
-.redScorePanel{
+.redScorePanel {
   background-color: #dc3545;
 }
 
 .vertical-align {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bte-connected {
@@ -79,54 +69,54 @@
   color: #FFFF00;
 }
 
-
 /* Extra small devices (phones, 600px and down) */
+
 @media only screen and (max-width: 600px) {
-  .score-text{
+  .score-text {
     font-size: 10em;
   }
-  .header{
+  .header {
     font-size: 2em;
   }
-
-  .display-3{
+  .display-3 {
     font-size: 1.5em;
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .score-text{
-      font-size: 10em;   
-  }
 
-  .footer{
+@media only screen and (min-width: 600px) {
+  .score-text {
+    font-size: 10em;
+  }
+  .footer {
     font-size: 2em;
   }
-
-  .header-icon{
-    font-size:4em;
+  .header-icon {
+    font-size: 4em;
   }
-  
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
+
 @media only screen and (min-width: 768px) {
-  .score-text{
-    font-size:15em;
+  .score-text {
+    font-size: 15em;
   }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
+
 @media only screen and (min-width: 992px) {
-  .score-text{
-    font-size:15em;   
+  .score-text {
+    font-size: 15em;
   }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
+
 @media only screen and (min-width: 1200px) {
-  html{
-      font-size: 15rem;   
+  html {
+    font-size: 15rem;
   }
 }
